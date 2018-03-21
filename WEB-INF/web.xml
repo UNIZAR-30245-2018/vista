@@ -6,17 +6,22 @@
 
 
     <welcome-file-list>
-        <welcome-file>Login.jsp</welcome-file>
+        <welcome-file>Login.html</welcome-file>
     </welcome-file-list>
 
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>LoginServlet</servlet-class>
+        <servlet-class>control.LoginServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>RegisterServlet</servlet-class>
+        <servlet-class>control.RegisterServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>VerPerfilServlet</servlet-name>
+        <servlet-class>control.VerPerfilServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -28,5 +33,11 @@
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet.do</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>VerPerfilServlet</servlet-name>
+        <url-pattern>/VerPerfilServlet.do</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

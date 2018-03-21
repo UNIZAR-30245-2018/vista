@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
-    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ page import="modelo.datos.UsuarioVO" %>
-    <%@ page import="modelo.WebFacade" %>
+	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+    <%@ page import="modelo.datos.VO.UsuarioVO" %>
+    <%@ page import="modelo.datos.WebFacade" %>
     <%@ page import="java.util.List" %>
 
  </head>
