@@ -37,11 +37,11 @@
     </nav>
     <div class="container; text-center" style="margin-top:50px">    
         <img src="<% usuario.getImagen(); %>" alt="Imagen del usuario" class="img-thumbnail">
-        <h3>Seudonimo: <span class="badge badge-primary"><% usuario.getSeudonimo(); %></span></h3>
-        <h3>Email: <span class="badge badge-primary"><% usuario.getNombre(); %></span></h3>
+        <h3>Seudonimo: <span class="badge badge-primary"><% out.write(usuario.getSeudonimo()); %></span></h3>
+        <h3>Email: <span class="badge badge-primary"><% out.write(usuario.getNombre()); %></span></h3>
         <h3>Nombre: <span class="badge badge-primary"><% out.write(usuario.getEmail()); %></span></h3>
 
-        <h3 style="margin-top:25px">Nivel: <span class="badge badge-primary"><% usuario.getNivel(); %></span></h3>
+        <h3 style="margin-top:25px">Nivel: <span class="badge badge-primary"><% out.write(usuario.getNivel()); %></span></h3>
         <div class="progress" style="height:20px; width:600px; margin-right:auto; margin-left:auto">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">25%</div>
         </div>
