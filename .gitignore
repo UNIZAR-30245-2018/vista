@@ -1,1 +1,7 @@
 *.war
+
+#El directorio .idea del IDE IntelliJ
+.idea/
+
+META-INF/
+

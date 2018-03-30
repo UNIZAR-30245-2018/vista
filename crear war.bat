@@ -1,1 +1,1 @@
-jar -cvf gameSocialMedia.war *
+jar -cvf vista.war *
