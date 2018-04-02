@@ -45,8 +45,8 @@
     </servlet-mapping>
 
     <servlet-mapping>
-      <servlet-name>ListaJuegosServlet</servlet-name>
-      <url-pattern>/ListaJuegosServlet.do</url-pattern>
+        <servlet-name>ListaJuegosServlet</servlet-name>
+        <url-pattern>/ListaJuegosServlet.do</url-pattern>
     </servlet-mapping>
 
 

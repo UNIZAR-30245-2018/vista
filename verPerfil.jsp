@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="css/styles.css">
 
-	<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ page import="modelo.datos.VO.UsuarioVO" %>
-    <%@ page import="modelo.datos.WebFacade" %>
+    <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+      <%@ page import="modelo.datos.VO.*" %>
+      <%@ page import="modelo.datos.*" %>
     <%@ page import="java.util.List" %>
 
  </head>
 
   <body>
-
-    <% UsuarioVO usuario = request.getAttribute("user"); %>
-
+  <% UsuarioVO usuario = (UsuarioVO)request.getAttribute("user"); %>
     <nav class="navbar navbar-light navbar-expand-md">
       <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
@@ -35,11 +35,11 @@
     </nav>
     <div class="container; text-center" style="margin-top:50px">    
         <img src="<% usuario.getImagen(); %>" alt="Imagen del usuario" class="img-thumbnail">
-        <h3>Seudonimo: <span class="badge badge-primary"><% out.write(usuario.getSeudonimo()); %></span></h3>
-        <h3>Email: <span class="badge badge-primary"><% out.write(usuario.getNombre()); %></span></h3>
+        <h3>Seudonimo: <span class="badge badge-primary"><% usuario.getSeudonimo(); %></span></h3>
+        <h3>Email: <span class="badge badge-primary"><% usuario.getNombre(); %></span></h3>
         <h3>Nombre: <span class="badge badge-primary"><% out.write(usuario.getEmail()); %></span></h3>
 
-        <h3 style="margin-top:25px">Nivel: <span class="badge badge-primary"><% out.write(usuario.getNivel()); %></span></h3>
+        <h3 style="margin-top:25px">Nivel: <span class="badge badge-primary"><% usuario.getNivel(); %></span></h3>
         <div class="progress" style="height:20px; width:600px; margin-right:auto; margin-left:auto">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">25%</div>
         </div>
