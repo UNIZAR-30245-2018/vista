@@ -16,7 +16,31 @@
  </head>
 
   <body>
-  <% UsuarioVO usuario = (UsuarioVO)request.getAttribute("user"); %>
+    <%
+    String email = null;
+    String password = null;
+      try {
+        Cookie[] cookies = request.getCookies(); 
+        if (cookies != null) {
+          for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("email")) {
+              email = cookies[i].getValue();
+            }
+            if (cookies[i].getName().equals("password")) {
+              password = cookies[i].getValue();
+            }
+          }
+        } else {
+          pageContext.forward("Login.jsp");
+        }
+      } catch (Exception e) {
+        e.printStackTrace(System.err);
+        pageContext.forward("error.jsp?id=cookies_exception");
+      }
+      WebFacade fachada = new WebFacade();
+      UsuarioVO usuario = fachada.buscarUsuario(email, password);
+    %>
+
     <nav class="navbar navbar-light navbar-expand-md">
       <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
