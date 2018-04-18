@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/styles.css">
 
     <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-      <%@ page import="modelo.datos.VO.*" %>
-      <%@ page import="modelo.datos.*" %>
+    <%@ page import="modelo.datos.VO.*" %>
+    <%@ page import="modelo.datos.*" %>
     <%@ page import="java.util.List" %>
 
  </head>
@@ -35,18 +35,21 @@
         }
       } catch (Exception e) {
         e.printStackTrace(System.err);
-        pageContext.forward("error.jsp?id=cookies_exception");
+        pageContext.forward("Login.jsp");
       }
       WebFacade fachada = new WebFacade();
       UsuarioVO usuario = fachada.buscarUsuario(email, password);
+      if (usuario == null){
+        pageContext.forward("Login.jsp");
+      } 
     %>
 
     <nav class="navbar navbar-light navbar-expand-md">
       <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navcol-1">
           <ul class="nav navbar-nav">
-            <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Usuario</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link" href="#">Juegos</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link active" href="Usuario.jsp">Usuario</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" href="verJuegos.jsp">Juegos</a></li>
             <li class="nav-item" role="presentation"><a class="nav-link" href="#">Logros</a></li>
           </ul>
           <ul class="nav navbar-nav ml-auto">
@@ -58,7 +61,8 @@
       </div>
     </nav>
     <div class="container; text-center" style="margin-top:50px">    
-        <img src="<% usuario.getImagen(); %>" alt="Imagen del usuario" class="img-thumbnail">
+         <!--<img src="<% %>" alt="Imagen del usuario" class="img-thumbnail">-->
+
         <h3>Seudonimo: <span class="badge badge-primary"><% out.write(usuario.getSeudonimo()); %></span></h3>
         <h3>Email: <span class="badge badge-primary"><% out.write(usuario.getEmail()); %></span></h3>
         <h3>Nombre: <span class="badge badge-primary"><% out.write(usuario.getNombre()); %></span></h3>
@@ -68,7 +72,7 @@
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 
             <% out.write(Integer.toString(usuario.getPorcentajeNivel())); %>%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><% out.write(Integer.toString(usuario.getPorcentajeNivel())); %>%</div>
         </div>
-
+        <li><a href="CerrarSesionServlet.do"><button type="button" class="btn btn-outline-danger">Cerrar Sesión</button></a></li>
     </div>
     
 

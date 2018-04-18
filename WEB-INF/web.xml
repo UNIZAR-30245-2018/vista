@@ -6,7 +6,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>Login.html</welcome-file>
+        <welcome-file>Login.jsp</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -29,6 +29,11 @@
         <servlet-class>control.VerPerfilServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>CerrarSesionServlet</servlet-name>
+        <servlet-class>control.CerrarSesionServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -47,6 +52,11 @@
     <servlet-mapping>
         <servlet-name>ListaJuegosServlet</servlet-name>
         <url-pattern>/ListaJuegosServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CerrarSesionServlet</servlet-name>
+        <url-pattern>/CerrarSesionServlet.do</url-pattern>
     </servlet-mapping>
 
 

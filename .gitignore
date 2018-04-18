@@ -1,4 +1,5 @@
 *.war
+*.class
 
 #El directorio .idea del IDE IntelliJ
 .idea/
