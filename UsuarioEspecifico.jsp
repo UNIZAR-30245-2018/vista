@@ -37,7 +37,7 @@
         if (cookies != null) {
           for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("email")) {
-              email = cookies[i].getValue();
+              emailLogin = cookies[i].getValue();
             }
             if (cookies[i].getName().equals("password")) {
               password = cookies[i].getValue();
@@ -60,7 +60,7 @@
       if (usuario == null){
         pageContext.forward("Usuario.jsp");
       }
-      List<PubicacionVO> publicaciones = fachada.getPublicacionesOfAnUser(seudonimo);
+      List<PublicacionVO> publicaciones = fachada.getPublicacionesOfAnUser(seudonimo);
       %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -114,23 +114,6 @@
             <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-3">Pendientes &nbsp;</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" role="tabpanel" id="tab-1">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr></tr>
-                        </thead>
-                        <tbody>
-                        <!-- TODO: Ponerlo con directivas de JSP-->
-                        <c:forEach items="${user.juegosEnCurso}" var="juegoEnCurso">
-                            <tr>
-                                <td>${juegoEnCurso.nombre}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <div class="tab-pane" role="tabpanel" id="tab-2">
                 <div class="table-responsive">
                     <table class="table">
@@ -182,7 +165,7 @@
     <%
     if (publicaciones.size() != 0){
         for (PublicacionVO publicacion : publicaciones) {
-            out.write("<li class=\"list-group-item\">);
+            out.write("<li class=\"list-group-item\">");
             out.write("<div class=\"media\"><img class=\"mr-3\">");
             out.write("<div class=\"media-body\">");
             out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + seudonimo + "\">" + publicacion.getUsuario() + "</a></h5>");

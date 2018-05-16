@@ -55,7 +55,7 @@
       if (usuario == null){
         pageContext.forward("Login.jsp");
       } 
-      List<PubicacionVO> publicaciones = fachada.getPublicaciones();
+      List<PublicacionVO> publicaciones = fachada.getPublicaciones();
       %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -109,23 +109,6 @@
             <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-3">Pendientes &nbsp;</a></li>
         </ul>
         <div class="tab-content">
-            <div class="tab-pane active" role="tabpanel" id="tab-1">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr></tr>
-                        </thead>
-                        <tbody>
-                        <!-- TODO: Ponerlo con directivas de JSP-->
-                        <c:forEach items="${user.juegosEnCurso}" var="juegoEnCurso">
-                            <tr>
-                                <td>${juegoEnCurso.nombre}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
             <div class="tab-pane" role="tabpanel" id="tab-2">
                 <div class="table-responsive">
                     <table class="table">
@@ -180,7 +163,7 @@
                 <h5>Añade un comentario nuevo!</h5>
                     <div class="form-group mb-2">
                         <label for="seudonimo" class="sr-only">seudonimo</label>
-                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% + usuario.getSeudonimo + %>>">
+                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% out.write(usuario.getSeudonimo()); %>">
                     </div>
 
                     <div class="input-group" style ="width:200%">
@@ -198,13 +181,17 @@
                             </label>
                           </div>
                     </div>
+
+                    <div class="col-sm-12 controls">
+                        <button id="btn-publicacion" href="#" type="submit" class="btn btn-success">Enviar</button>
+                    </div>
                 </form>
         </div>
     </li>
     <%
     if (publicaciones.size() != 0){
         for (PublicacionVO publicacion : publicaciones) {
-            out.write("<li class=\"list-group-item\">);
+            out.write("<li class=\"list-group-item\">");
             out.write("<div class=\"media\"><img class=\"mr-3\">");
             out.write("<div class=\"media-body\">");
             out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + publicacion.getUsuario() + "\">" + publicacion.getUsuario() + "</a></h5>");
