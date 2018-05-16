@@ -30,7 +30,7 @@
 
 <body>
 <% 
-    String email = null;
+    String emailLogin = null;
     String password = null;
       try {
         Cookie[] cookies = request.getCookies(); 
@@ -51,11 +51,16 @@
         pageContext.forward("Login.jsp");
       }
       WebFacade fachada = new WebFacade();
-      UsuarioVO usuario = fachada.buscarUsuario(email, password);
-      if (usuario == null){
+      UsuarioVO usuarioLogin = fachada.buscarUsuario(emailLogin, password);
+      if (usuarioLogin == null){
         pageContext.forward("Login.jsp");
-      } 
-      List<PubicacionVO> publicaciones = fachada.getPublicaciones();
+      }
+      String seudonimo = request.getParameter("seudonimo");
+      UsuarioVO usuario = fachada.getUser(seudonimo);
+      if (usuario == null){
+        pageContext.forward("Usuario.jsp");
+      }
+      List<PubicacionVO> publicaciones = fachada.getPublicacionesOfAnUser(seudonimo);
       %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -174,40 +179,13 @@
     </div>
 </div>
 <ul class="list-group" style="margin-top:10%;float:inherit;width:50%;margin-left:45%;">
-    <li class="list-group-item">
-        <div class="media"><img class="mr-3">
-            <form id="enterText" action="anadirPublicacionServlet.do" method="post" class="form-horizontal" role="form">
-                <h5>Añade un comentario nuevo!</h5>
-                    <div class="form-group mb-2">
-                        <label for="seudonimo" class="sr-only">seudonimo</label>
-                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% + usuario.getSeudonimo + %>>">
-                    </div>
-
-                    <div class="input-group" style ="width:200%">
-                        <input id="texto" type="text" class="form-control" name="texto" value="" placeholder="Texto">                                        
-                    </div>
-
-                    <div class="input-group" style ="width:100%">
-                        <input id="juego" type="text" class="form-control" name="juego" value="" placeholder="Juego">                                        
-                    </div>
-                                     
-                    <div class="input-group">
-                        <div class="checkbox">
-                            <label>
-                                <input id="spoiler" type="checkbox" name="spoiler" value="1"> Spoiler
-                            </label>
-                          </div>
-                    </div>
-                </form>
-        </div>
-    </li>
     <%
     if (publicaciones.size() != 0){
         for (PublicacionVO publicacion : publicaciones) {
             out.write("<li class=\"list-group-item\">);
             out.write("<div class=\"media\"><img class=\"mr-3\">");
             out.write("<div class=\"media-body\">");
-            out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + publicacion.getUsuario() + "\">" + publicacion.getUsuario() + "</a></h5>");
+            out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + seudonimo + "\">" + publicacion.getUsuario() + "</a></h5>");
             out.write("<h3>" + publicacion.getJuego() + "</h3>");
             out.write("<p>" + publicacion.getTexto() + "</p>");
             out.write("<small>" + publicacion.getFecha() + "</small>");
