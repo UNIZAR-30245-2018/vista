@@ -21,8 +21,8 @@
         <div class="collapse navbar-collapse"
              id="navcol-1">
             <ul class="nav navbar-nav">
-                <li class="nav-item" role="presentation"><a class="nav-link" href="#">Usuario</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="#">Juegos</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="VerPerfilServlet.do">Usuario</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="ListaJuegosServlet.do">Juegos</a></li>
             </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Logros</a></li>
@@ -44,7 +44,7 @@
                 + "        <div style=\"width:400px;/*position:absolute;*/float:left;\">\n"
                 + "            <h1>"+ juegos.get(i).getNombre() + "</h1>\n"
                 + "        </div>\n"
-                + "        <div style=\"/*float:right;*/margin:0 auto;margin-top:10px;\"><button class=\"btn btn-primary\" type=\"button\">Más información</button><button class=\"btn btn-primary\" type=\"button\" style=\"float:right;\">Añadir a Lista</button></div>\n"
+                + "        <div style=\"/*float:right;*/margin:0 auto;margin-top:10px;\"><button class=\"btn btn-primary\" type=\"button\">Más información</button><button class=\"btn btn-primary\" href=\"addJuegoServlet.do?id=" + juegos.get(i).getId() + "\" type=\"button\" style=\"float:right;\">Añadir a Lista</button></div>\n"
                 + "    </li>");
     }
     %>
