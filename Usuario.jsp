@@ -101,76 +101,66 @@
         </div>
     </div>
 </div>
-<div id="DivTab">
-    <div id="ListasDeJuegos" class="DivTab" style="float:left;position:relative;top:315px;margin-left:4px;">
-        <ul class="nav nav-tabs">
-            <li class="nav-item" style="align-items:center;"><a class="nav-link active" data-toggle="tab" href="#tab-1">En curso</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-2">Completados</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-3">Pendientes &nbsp;</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane active" role="tabpanel" id="tab-1">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr></tr>
-                        </thead>
-                        <tbody>
-                        <!-- TODO: Ponerlo con directivas de JSP-->
-                        <c:forEach items="${user.juegosEnCurso}" var="juegoEnCurso">
-                            <tr>
-                                <td>${juegoEnCurso.nombre}</td>
-                            </tr>
-                        </c:forEach>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane" role="tabpanel" id="tab-2">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane" role="tabpanel" id="tab-3">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<div style="float:left;position:relative;top:315px;margin-left:4px;" class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-primary">
+                    <th scope="col">Juegos En Curso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark</td>
+                </tr>
+                <tr>
+                    <td>Jacob</td>
+                </tr>
+                <tr>
+                    <td>Larry</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-success">
+                    <th scope="col">Juegos Completados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr >
+                    <td>Mark</td>
+                </tr>
+                <tr>
+                    <td>Jacob</td>
+                </tr>
+                <tr>
+                    <td>Larry</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-warning">
+                    <th scope="col">Juegos Pendientes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mark</td>
+                </tr>
+                <tr>
+                    <td>Jacob</td>
+                </tr>
+                <tr>
+                    <td>Larry</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 <ul class="list-group" style="margin-top:10%;float:inherit;width:50%;margin-left:45%;">
@@ -180,7 +170,7 @@
                 <h5>Añade un comentario nuevo!</h5>
                     <div class="form-group mb-2">
                         <label for="seudonimo" class="sr-only">seudonimo</label>
-                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% + usuario.getSeudonimo + %>>">
+                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% + usuario.getSeudonimo + %>">
                     </div>
 
                     <div class="input-group" style ="width:200%">
