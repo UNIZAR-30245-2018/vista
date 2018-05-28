@@ -15,14 +15,19 @@
 <%@ page import="java.util.ArrayList" %>
 
 <body>
-<% ArrayList<JuegoVO> juegos = (ArrayList<JuegoVO>)request.getAttribute("juegos"); %>
+<% ArrayList<JuegoVO> juegos = (ArrayList<JuegoVO>)request.getAttribute("juegos");
+    if(juegos == null){
+        WebFacade fachada = new WebFacade();
+        juegos = fachada.getJuegos();
+    }
+%>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
              id="navcol-1">
             <ul class="nav navbar-nav">
-                <li class="nav-item" role="presentation"><a class="nav-link" href="#">Usuario</a></li>
-                <li class="nav-item" role="presentation"><a class="nav-link" href="#">Juegos</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="verFeedServlet.do">Usuario</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" href="ListaJuegosServlet.do">Juegos</a></li>
             </ul>
             <ul class="nav navbar-nav">
                 <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Logros</a></li>
@@ -46,15 +51,15 @@
                 + "        </div>\n"
                 + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
                 + "             <button name =\"lista\" class=\"btn btn-danger\" type=\"submit\" value=\"pendiente\" style=\"float:right;\">Añadir a pendiente</button>\n"
-                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
+                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
                 + "        </form>\n"
                 + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
                 + "             <button name =\"lista\" class=\"btn btn-primary\" type=\"submit\" value=\"enCurso\" style=\"float:right;\">Añadir a en curso</button>\n"
-                + "             <input name=\"id" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
+                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
                 + "        </form>\n"
-                + "        <form action="addJuegoServlet.do" method="get">\n"
+                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
                 + "            <button name =\"lista\" class=\"btn btn-success\" type=\"submit\" value=\"completado\" style=\"float:right;\">Añadir a completado</button>\n"
-                + "            <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
+                + "            <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
                 + "        </form>\n"
                 + "    </li>");
     }

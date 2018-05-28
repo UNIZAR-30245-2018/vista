@@ -48,8 +48,8 @@
   <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navcol-1">
       <ul class="nav navbar-nav">
-        <li class="nav-item" role="presentation"><a class="nav-link active" href="Usuario.jsp">Usuario</a></li>
-        <li class="nav-item" role="presentation"><a class="nav-link" href="verJuegos.jsp">Juegos</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="verFeedServlet.do">Usuario</a></li>
+        <li class="nav-item" role="presentation"><a class="nav-link" href="ListaJuegosServlet.do">Juegos</a></li>
         <li class="nav-item" role="presentation"><a class="nav-link" href="#">Logros</a></li>
       </ul>
       <ul class="nav navbar-nav ml-auto">

@@ -24,42 +24,47 @@
 </head>
 <%@ page import="modelo.datos.VO.PublicacionVO" %>
 <%@ page import="modelo.datos.VO.UsuarioVO" %>
+<%@ page import="modelo.datos.VO.JuegoVO" %>
 <%@ page import="modelo.datos.WebFacade" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
 <body>
-<% 
+<%
     String email = null;
     String password = null;
-      try {
-        Cookie[] cookies = request.getCookies(); 
+    try {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-          for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("email")) {
-              email = cookies[i].getValue();
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("email")) {
+                    email = cookies[i].getValue();
+                }
+                if (cookies[i].getName().equals("password")) {
+                    password = cookies[i].getValue();
+                }
             }
-            if (cookies[i].getName().equals("password")) {
-              password = cookies[i].getValue();
-            }
-          }
         } else {
-          pageContext.forward("Login.jsp");
+            pageContext.forward("Login.jsp");
         }
-      } catch (Exception e) {
+    } catch (Exception e) {
         e.printStackTrace(System.err);
         pageContext.forward("Login.jsp");
-      }
-      WebFacade fachada = new WebFacade();
-      UsuarioVO usuario = fachada.buscarUsuario(email, password);
-      if (usuario == null){
+    }
+    WebFacade fachada = new WebFacade();
+    UsuarioVO usuario = fachada.buscarUsuario(email, password);
+    if (usuario == null){
         pageContext.forward("Login.jsp");
-      } 
-      List<PublicacionVO> publicaciones = fachada.getPublicaciones();
-      List<JuegoVO> juegosEnCurso = usuario.getJuegosEnCurso();
-      List<JuegoVO> juegosCompletados = fachada.getJuegosCompletados();
-      List<JuegoVO> juegosPendientes = fachada.getJuegosPendientes();
-      %>
+    }
+    List<PublicacionVO> publicaciones = fachada.getPublicaciones();
+    List<JuegoVO> juegosEnCurso = fachada.getJuegosEnCursoDeUser(usuario);
+    List<JuegoVO> juegosCompletados = fachada.getJuegosCompletadosDeUser(usuario);
+    List<JuegoVO> juegosPendientes = fachada.getJuegosPendientesDeUser(usuario);
+    System.out.println("Completados" + juegosCompletados.size());
+    System.out.println("EnCurso" + juegosEnCurso.size());
+    System.out.println("Pendientes" + juegosPendientes.size());
+    System.out.println("Usuario" + usuario.getSeudonimo());
+%>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
@@ -73,7 +78,7 @@
             </ul>
             <ul class="nav navbar-nav ml-auto">
                 <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Ajustes</a>
-                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="#">&nbsp;Ver perfil</a><a class="dropdown-item" role="presentation" href="#">Cerrar sesión</a></div>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="VerPerfilServlet.do">&nbsp;Ver perfil</a><a class="dropdown-item" role="presentation" href="#">Cerrar sesión</a></div>
                 </li>
             </ul>
         </div>
@@ -86,10 +91,10 @@
     <div class="row" style="border:1px solid blue;/*width:50%;*/border-radius:12px;">
         <div class="col" style="align-content:center;/*border:1px solid black;*/">
             <h1 style="text-align:center;/*border:1px solid black;*/"><% if (usuario == null){
-              out.write("esta vacio");
+                out.write("esta vacio");
             }
             else{
-              out.write(usuario.getNombre());
+                out.write(usuario.getNombre());
             }%></h1>
         </div>
     </div>
@@ -108,17 +113,17 @@
     <div class="col-md-4">
         <table class="table">
             <thead>
-                <tr class="bg-primary">
-                    <th scope="col">Juegos En Curso</th>
-                </tr>
+            <tr class="bg-primary">
+                <th scope="col">Juegos En Curso</th>
+            </tr>
             </thead>
             <tbody>
             <%
-            for (JuegoVO juego : juegosEnCurso) {
-                out.write("<tr>");
-                out.write("<td>" + juego.getNombre() + "</td>");
-                out.write("</tr>");
-            }   
+                for (JuegoVO juego : juegosEnCurso) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
             %>
             </tbody>
         </table>
@@ -126,17 +131,17 @@
     <div class="col-md-4">
         <table class="table">
             <thead>
-                <tr class="bg-success">
-                    <th scope="col">Juegos Completados</th>
-                </tr>
+            <tr class="bg-success">
+                <th scope="col">Juegos Completados</th>
+            </tr>
             </thead>
             <tbody>
             <%
-            for (JuegoVO juego : juegosCompletados) {
-                out.write("<tr>");
-                out.write("<td>" + juego.getNombre() + "</td>");
-                out.write("</tr>");
-            }   
+                for (JuegoVO juego : juegosCompletados) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
             %>
             </tbody>
         </table>
@@ -144,17 +149,17 @@
     <div class="col-md-4">
         <table class="table">
             <thead>
-                <tr class="bg-warning">
-                    <th scope="col">Juegos Pendientes</th>
-                </tr>
+            <tr class="bg-warning">
+                <th scope="col">Juegos Pendientes</th>
+            </tr>
             </thead>
             <tbody>
             <%
-            for (JuegoVO juego : juegosPendientes) {
-                out.write("<tr>");
-                out.write("<td>" + juego.getNombre() + "</td>");
-                out.write("</tr>");
-            }   
+                for (JuegoVO juego : juegosPendientes) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
             %>
             </tbody>
         </table>
@@ -165,48 +170,48 @@
         <div class="media"><img class="mr-3">
             <form id="enterText" action="anadirPublicacionServlet.do" method="post" class="form-horizontal" role="form">
                 <h5>Añade un comentario nuevo!</h5>
-                    <div class="form-group mb-2">
-                        <label for="seudonimo" class="sr-only">seudonimo</label>
-                        <input  id="seudonimo" type="text" readonly class="form-control-plaintext" value="<% out.write(usuario.getSeudonimo()); %>">
-                    </div>
+                <div class="form-group mb-2">
+                    <label for="seudonimo" class="sr-only">seudonimo</label>
+                    <input  id="seudonimo" name="seudonimo" type="text" readonly class="form-control-plaintext" value="<% out.write(usuario.getSeudonimo()); %>">
+                </div>
 
-                    <div class="input-group" style ="width:200%">
-                        <input id="texto" type="text" class="form-control" name="texto" value="" placeholder="Texto">                                        
-                    </div>
+                <div class="input-group" style ="width:200%">
+                    <input id="texto" type="text" class="form-control" name="texto" value="" placeholder="Texto">
+                </div>
 
-                    <div class="input-group" style ="width:100%">
-                        <input id="juego" type="text" class="form-control" name="juego" value="" placeholder="Juego">                                        
-                    </div>
-                                     
-                    <div class="input-group">
-                        <div class="checkbox">
-                            <label>
-                                <input id="spoiler" type="checkbox" name="spoiler" value="1"> Spoiler
-                            </label>
-                          </div>
-                    </div>
+                <div class="input-group" style ="width:100%">
+                    <input id="juego" type="text" class="form-control" name="juego" value="" placeholder="Juego">
+                </div>
 
-                    <div class="col-sm-12 controls">
-                        <button id="btn-publicacion" href="#" type="submit" class="btn btn-success">Enviar</button>
+                <div class="input-group">
+                    <div class="checkbox">
+                        <label>
+                            <input id="spoiler" type="checkbox" name="spoiler" value="1"> Spoiler
+                        </label>
                     </div>
-                </form>
+                </div>
+
+                <div class="col-sm-12 controls">
+                    <button id="btn-publicacion" href="#" type="submit" class="btn btn-success">Enviar</button>
+                </div>
+            </form>
         </div>
     </li>
     <%
-    if (publicaciones.size() != 0){
-        for (PublicacionVO publicacion : publicaciones) {
-            out.write("<li class=\"list-group-item\">");
-            out.write("<div class=\"media\"><img class=\"mr-3\">");
-            out.write("<div class=\"media-body\">");
-            out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + publicacion.getUsuario() + "\">" + publicacion.getUsuario() + "</a></h5>");
-            out.write("<h3>" + publicacion.getJuego() + "</h3>");
-            out.write("<p>" + publicacion.getTexto() + "</p>");
-            out.write("<small>" + publicacion.getFecha() + "</small>");
-            out.write("</div>");
-            out.write("</div>");
-            out.write("</li>");
+        if (publicaciones.size() != 0){
+            for (PublicacionVO publicacion : publicaciones) {
+                out.write("<li class=\"list-group-item\">");
+                out.write("<div class=\"media\"><img class=\"mr-3\">");
+                out.write("<div class=\"media-body\">");
+                out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + publicacion.getUsuario() + "\">" + publicacion.getUsuario() + "</a></h5>");
+                out.write("<h3>" + publicacion.getJuego() + "</h3>");
+                out.write("<p>" + publicacion.getTexto() + "</p>");
+                out.write("<small>" + publicacion.getFecha() + "</small>");
+                out.write("</div>");
+                out.write("</div>");
+                out.write("</li>");
+            }
         }
-    }
     %>
 </ul>
 <script src="assets/js/jquery.min.js"></script>
