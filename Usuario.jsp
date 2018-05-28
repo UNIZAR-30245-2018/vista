@@ -56,6 +56,9 @@
         pageContext.forward("Login.jsp");
       } 
       List<PublicacionVO> publicaciones = fachada.getPublicaciones();
+      List<JuegoVO> juegosEnCurso = usuario.getJuegosEnCurso();
+      List<JuegoVO> juegosCompletados = fachada.getJuegosCompletados();
+      List<JuegoVO> juegosPendientes = fachada.getJuegosPendientes();
       %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -110,15 +113,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                </tr>
-                <tr>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <td>Larry</td>
-                </tr>
+            <%
+            for (JuegoVO juego : juegosEnCurso) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
             </tbody>
         </table>
     </div>
@@ -130,15 +131,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr >
-                    <td>Mark</td>
-                </tr>
-                <tr>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <td>Larry</td>
-                </tr>
+            <%
+            for (JuegoVO juego : juegosCompletados) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
             </tbody>
         </table>
     </div>
@@ -150,15 +149,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                </tr>
-                <tr>
-                    <td>Jacob</td>
-                </tr>
-                <tr>
-                    <td>Larry</td>
-                </tr>
+            <%
+            for (JuegoVO juego : juegosPendientes) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
             </tbody>
         </table>
     </div>
