@@ -56,6 +56,9 @@
         pageContext.forward("Login.jsp");
       } 
       List<PublicacionVO> publicaciones = fachada.getPublicaciones();
+      List<JuegoVO> juegosEnCurso = usuario.getJuegosEnCurso();
+      List<JuegoVO> juegosCompletados = fachada.getJuegosCompletados();
+      List<JuegoVO> juegosPendientes = fachada.getJuegosPendientes();
       %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -101,59 +104,60 @@
         </div>
     </div>
 </div>
-<div id="DivTab">
-    <div id="ListasDeJuegos" class="DivTab" style="float:left;position:relative;top:315px;margin-left:4px;">
-        <ul class="nav nav-tabs">
-            <li class="nav-item" style="align-items:center;"><a class="nav-link active" data-toggle="tab" href="#tab-1">En curso</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-2">Completados</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-3">Pendientes &nbsp;</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane" role="tabpanel" id="tab-2">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane" role="tabpanel" id="tab-3">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<div style="float:left;position:relative;top:315px;margin-left:4px;" class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-primary">
+                    <th scope="col">Juegos En Curso</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+            for (JuegoVO juego : juegosEnCurso) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-success">
+                    <th scope="col">Juegos Completados</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+            for (JuegoVO juego : juegosCompletados) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+                <tr class="bg-warning">
+                    <th scope="col">Juegos Pendientes</th>
+                </tr>
+            </thead>
+            <tbody>
+            <%
+            for (JuegoVO juego : juegosPendientes) {
+                out.write("<tr>");
+                out.write("<td>" + juego.getNombre() + "</td>");
+                out.write("</tr>");
+            }   
+            %>
+            </tbody>
+        </table>
     </div>
 </div>
 <ul class="list-group" style="margin-top:10%;float:inherit;width:50%;margin-left:45%;">

@@ -39,6 +39,11 @@
         <servlet-class>control.anadirPublicacionServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>addJuegoServlet</servlet-name>
+        <servlet-class>control.addJuegoServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -67,6 +72,11 @@
     <servlet-mapping>
         <servlet-name>anadirPublicacionServlet</servlet-name>
         <url-pattern>/anadirPublicacionServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>addJuegoServlet</servlet-name>
+        <url-pattern>/addJuegoServlet.do</url-pattern>
     </servlet-mapping>
 
 
