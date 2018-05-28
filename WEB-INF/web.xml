@@ -34,6 +34,11 @@
         <servlet-class>control.CerrarSesionServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>anadirPublicacionServlet</servlet-name>
+        <servlet-class>control.anadirPublicacionServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet.do</url-pattern>
@@ -57,6 +62,11 @@
     <servlet-mapping>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <url-pattern>/CerrarSesionServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>anadirPublicacionServlet</servlet-name>
+        <url-pattern>/anadirPublicacionServlet.do</url-pattern>
     </servlet-mapping>
 
 

@@ -37,7 +37,7 @@
         if (cookies != null) {
           for (int i = 0; i < cookies.length; i++) {
             if (cookies[i].getName().equals("email")) {
-              email = cookies[i].getValue();
+              emailLogin = cookies[i].getValue();
             }
             if (cookies[i].getName().equals("password")) {
               password = cookies[i].getValue();
