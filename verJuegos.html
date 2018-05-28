@@ -9,13 +9,9 @@
     <link rel="stylesheet" href="fonts/simple-line-icons.min.css">
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<%@ page import="modelo.datos.VO.*" %>
-<%@ page import="modelo.datos.*" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
+
 
 <body>
-<% ArrayList<JuegoVO> juegos = (ArrayList<JuegoVO>)request.getAttribute("juegos"); %>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
@@ -39,26 +35,27 @@
     <h1 style="/*align-self:center;*//*align-items:center;*//*align-content:center;*/margin:auto;line-height:51px;vertical-align:middle;">Lista de Juegos</h1>
 </div>
 <ul class="list-group" style="/*align-items:center;*//*align-items:center;*/align-content:center;/*margin-top:10%;*//*margin-left:1%;*//*width:62px;*//*height:51px;*//*color:white;*//*position:absolute;*//*text-align:center;*//*background-color:black;*/">
-    <%  for(int i= 0; i < juegos.size(); i++) {
-        out.write("<li class=\"list-group-item\" id=\"colJuego\">\n"
-                + "        <div style=\"width:400px;/*position:absolute;*/float:left;\">\n"
-                + "            <h1>"+ juegos.get(i).getNombre() + "</h1>\n"
-                + "        </div>\n"
-                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
-                + "             <button name =\"lista\" class=\"btn btn-danger\" type=\"submit\" value=\"pendiente\" style=\"float:right;\">Añadir a pendiente</button>\n"
-                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
-                + "        </form>\n"
-                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
-                + "             <button name =\"lista\" class=\"btn btn-primary\" type=\"submit\" value=\"enCurso\" style=\"float:right;\">Añadir a en curso</button>\n"
-                + "             <input name=\"id" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
-                + "        </form>\n"
-                + "        <form action="addJuegoServlet.do" method="get">\n"
-                + "            <button name =\"lista\" class=\"btn btn-success\" type=\"submit\" value=\"completado\" style=\"float:right;\">Añadir a completado</button>\n"
-                + "            <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getID() +"\">\n"
-                + "        </form>\n"
-                + "    </li>");
-    }
-    %>
+<li class="list-group-item" id="colJuego">
+<div style="width:400px;/*position:absolute;*/float:left;">
+<h1>Nombre</h1>
+</div>
+<div style="/*float:right;*/margin:0 auto;margin-top:10px;">
+    <button class="btn btn-primary" type="button">Más información</button>
+    <form action="addJuegoServlet.do" method="get">
+        <button name ="lista" class="btn btn-danger" type="submit" value="pendiente" style="float:right;">Añadir a pendiente</button>
+        <input name="id" type="hidden" value="12345">
+    </form>
+    <form action="addJuegoServlet.do" method="get">
+        <button name ="lista" class="btn btn-primary" type="submit" value="enCurso" style="float:right;">Añadir a en curso</button>
+        <input name="id" type="hidden" value="12345">
+    </form>
+    <form action="addJuegoServlet.do" method="get">
+        <button name ="lista" class="btn btn-success" type="submit" value="completado" style="float:right;">Añadir a completado</button>
+        <input name="id" type="hidden" value="12345">
+    </form>
+</div>
+</li>
+
 </ul>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
