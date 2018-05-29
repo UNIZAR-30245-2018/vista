@@ -24,44 +24,53 @@
 </head>
 <%@ page import="modelo.datos.VO.PublicacionVO" %>
 <%@ page import="modelo.datos.VO.UsuarioVO" %>
+<%@ page import="modelo.datos.VO.JuegoVO" %>
 <%@ page import="modelo.datos.WebFacade" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
 <body>
-<% 
+<%
     String emailLogin = null;
+    boolean leSigue = false;
     String password = null;
-      try {
-        Cookie[] cookies = request.getCookies(); 
+    try {
+        Cookie[] cookies = request.getCookies();
         if (cookies != null) {
-          for (int i = 0; i < cookies.length; i++) {
-            if (cookies[i].getName().equals("email")) {
-              emailLogin = cookies[i].getValue();
+            for (int i = 0; i < cookies.length; i++) {
+                if (cookies[i].getName().equals("email")) {
+                    emailLogin = cookies[i].getValue();
+                }
+                if (cookies[i].getName().equals("password")) {
+                    password = cookies[i].getValue();
+                }
             }
-            if (cookies[i].getName().equals("password")) {
-              password = cookies[i].getValue();
-            }
-          }
         } else {
-          pageContext.forward("Login.jsp");
+            pageContext.forward("Login.jsp");
         }
-      } catch (Exception e) {
+    } catch (Exception e) {
         e.printStackTrace(System.err);
         pageContext.forward("Login.jsp");
-      }
-      WebFacade fachada = new WebFacade();
-      UsuarioVO usuarioLogin = fachada.buscarUsuario(emailLogin, password);
-      if (usuarioLogin == null){
+    }
+    WebFacade fachada = new WebFacade();
+    UsuarioVO usuarioLogin = fachada.buscarUsuario(emailLogin, password);
+    if (usuarioLogin == null){
         pageContext.forward("Login.jsp");
-      }
-      String seudonimo = request.getParameter("seudonimo");
-      UsuarioVO usuario = fachada.getUser(seudonimo);
-      if (usuario == null){
+    }
+    String seudonimo = request.getParameter("seudonimo");
+    UsuarioVO usuario = fachada.getUser(seudonimo);
+    if (usuario == null){
         pageContext.forward("Usuario.jsp");
-      }
-      List<PublicacionVO> publicaciones = fachada.getPublicacionesOfAnUser(seudonimo);
-      %>
+    }
+    List<PublicacionVO> publicaciones = fachada.getPublicacionesOfAnUser(seudonimo);
+    List<JuegoVO> juegosEnCurso = fachada.getJuegosEnCursoDeUser(usuario);
+    List<JuegoVO> juegosCompletados = fachada.getJuegosCompletadosDeUser(usuario);
+    List<JuegoVO> juegosPendientes = fachada.getJuegosPendientesDeUser(usuario);
+    leSigue = fachada.userSigue(usuarioLogin,usuario);
+    int numeroSeguidores = fachada.numeroSeguidores(usuario);
+    int numeroSeguidos = fachada.numeroSeguidos(usuario);
+
+%>
 <nav class="navbar navbar-light navbar-expand-md">
     <div class="container-fluid"><a class="navbar-brand" href="#">Nombre de la Red Social</a><button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse"
@@ -73,6 +82,9 @@
             <ul class="nav navbar-nav">
                 <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Logros</a></li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li class="nav-item" role="presentation"><a class="nav-link active" href="verUsuariosServlet.do">Lista de Usuarios</a></li>
+            </ul>
             <ul class="nav navbar-nav ml-auto">
                 <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Ajustes</a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="#">&nbsp;Ver perfil</a><a class="dropdown-item" role="presentation" href="#">Cerrar sesión</a></div>
@@ -82,103 +94,130 @@
     </div>
 </nav>
 <div id="InfoUsuario" style="width:initial;/*height:100px;*/margin:4px;/*border:1px solid black;*/float:left;margin-top:10%;position:absolute;">
-    <div class="row" style="width:inherit;">
-        <div class="col" style="align-items:center;align-content:center;/*border:initial;*/border:1px solid blue;width:50%;border-radius:12px;"><img style="/*max-width:100%;*/display:block;margin:auto;"></div>
-    </div>
     <div class="row" style="border:1px solid blue;/*width:50%;*/border-radius:12px;">
+        <div class="row" style="width:inherit;">
+            <div class="col" style="align-items:center;align-content:center;/*border:initial;*/border:1px solid blue;width:50%;border-radius:12px;"><img style="/*max-width:100%;*/display:block;margin:auto;"></div>
+        </div>
         <div class="col" style="align-content:center;/*border:1px solid black;*/">
             <h1 style="text-align:center;/*border:1px solid black;*/"><% if (usuario == null){
-              out.write("esta vacio");
+                out.write("esta vacio");
             }
             else{
-              out.write(usuario.getNombre());
+                out.write(usuario.getNombre());
             }%></h1>
         </div>
     </div>
     <div class="container" style="width:inherit;/*margin-left:auto;*/justify-content:space-around;">
         <div class="row">
             <div class="col-md-6" style="/*border:1px solid black;*/width:inherit;align-self:left;border:1px solid blue;/*width:50%;*/border-radius:12px;">
-                <h4 style="/*border:1px solid black;*/">Seguidores : ?</h4>
+                <h4 style="/*border:1px solid black;*/">Seguidores : <%  out.write(String.valueOf(numeroSeguidores)); %></h4>
             </div>
             <div class="col-md-6" style="border:1px solid black;/*width:50%;*/border:1px solid blue;/*width:50%;*/border-radius:12px;">
-                <h3 style="/*border:1px solid black;*/">Siguiendo:${user.getSeguidos().size()}</h3>
+                <h3 style="/*border:1px solid black;*/">Siguiendo:<% out.write(String.valueOf(numeroSeguidos)) ;%></h3>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="width:inherit;justify-content:space-around;">
+        <div class="row" style="width:inherit;text-align: center; ;justify-content:space-around;">
+            <div class="col-md-6" style="width:inherit;align-self:center;border:1px solid blue;border-radius:12px;">
+
+                <%
+                    if(!leSigue){
+                        out.write("<form action=\"seguirUserServlet.do\" method=\"get\">\n"
+                                + "             <button name =\"user\" class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navcol-1\" type=\"submit\" value=\"" + usuarioLogin.getSeudonimo() + "\">Seguir</button>\n"
+                                + "             <input name=\"seguido\" type=\"hidden\" value=\""+ usuario.getSeudonimo() +"\">\n"
+                                + "             <input name=\"accion\" type=\"hidden\" value=\"seguir\">\n"
+                                + "        </form>\n");}
+                    else{
+                        out.write("<form action=\"seguirUserServlet.do\" method=\"get\">\n"
+                                + "             <button name =\"user\" class=\"navbar-toggler\" data-toggle=\"collapse\" data-target=\"#navcol-1\" type=\"submit\" value=\"" + usuarioLogin.getSeudonimo() + "\">Dejar de seguir</button>\n"
+                                + "             <input name=\"seguido\" type=\"hidden\" value=\""+ usuario.getSeudonimo() +"\">\n"
+                                + "             <input name=\"accion\" type=\"hidden\" value=\"No seguir\">\n"
+                                + "        </form>\n");
+                    }
+                %>
+
+                <button class="navbar-toggler" data-toggle="collapse" data-target="#navcol-1">   </button>
             </div>
         </div>
     </div>
 </div>
-<div id="DivTab">
-    <div id="ListasDeJuegos" class="DivTab" style="float:left;position:relative;top:315px;margin-left:4px;">
-        <ul class="nav nav-tabs">
-            <li class="nav-item" style="align-items:center;"><a class="nav-link active" data-toggle="tab" href="#tab-1">En curso</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-2">Completados</a></li>
-            <li class="nav-item" style="align-items:center;"><a class="nav-link" data-toggle="tab" href="#tab-3">Pendientes &nbsp;</a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane" role="tabpanel" id="tab-2">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="tab-pane" role="tabpanel" id="tab-3">
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th>Column 1</th>
-                            <th>Column 2</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>Cell 1</td>
-                            <td>Cell 2</td>
-                        </tr>
-                        <tr>
-                            <td>Cell 3</td>
-                            <td>Cell 4</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+<div style="float:left;position:relative;top:315px;margin-left:4px;" class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+            <tr class="bg-primary">
+                <th scope="col">Juegos En Curso</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (JuegoVO juego : juegosEnCurso) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
+            %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+            <tr class="bg-success">
+                <th scope="col">Juegos Completados</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (JuegoVO juego : juegosCompletados) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
+            %>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <table class="table">
+            <thead>
+            <tr class="bg-warning">
+                <th scope="col">Juegos Pendientes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <%
+                for (JuegoVO juego : juegosPendientes) {
+                    out.write("<tr>");
+                    out.write("<td>" + juego.getNombre() + "</td>");
+                    out.write("</tr>");
+                }
+            %>
+            </tbody>
+        </table>
     </div>
 </div>
-<ul class="list-group" style="margin-top:10%;float:inherit;width:50%;margin-left:45%;">
-    <%
-    if (publicaciones.size() != 0){
-        for (PublicacionVO publicacion : publicaciones) {
-            out.write("<li class=\"list-group-item\">");
-            out.write("<div class=\"media\"><img class=\"mr-3\">");
-            out.write("<div class=\"media-body\">");
-            out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + seudonimo + "\">" + publicacion.getUsuario() + "</a></h5>");
-            out.write("<h3>" + publicacion.getJuego() + "</h3>");
-            out.write("<p>" + publicacion.getTexto() + "</p>");
-            out.write("<small>" + publicacion.getFecha() + "</small>");
-            out.write("</div>");
-            out.write("</div>");
-            out.write("</li>");
-        }
-    }
-    %>
-</ul>
+<div style="float:right;top:315px;margin-left:4px;width:70%" class="row">
+    <ul class="list-group" style="margin-top:10%;float:inherit;width:50%;margin-left:45%;">
+        <%
+            if (publicaciones.size() != 0){
+                for (PublicacionVO publicacion : publicaciones) {
+                    out.write("<li class=\"list-group-item\">");
+                    out.write("<div class=\"media\"><img class=\"mr-3\">");
+                    out.write("<div class=\"media-body\">");
+                    out.write("<h5><a href=\"./UsuarioEspecifico.jsp?seudonimo=" + seudonimo + "\">" + publicacion.getUsuario() + "</a></h5>");
+                    out.write("<h3>" + publicacion.getJuego() + "</h3>");
+                    out.write("<p>" + publicacion.getTexto() + "</p>");
+                    out.write("<small>" + publicacion.getFecha() + "</small>");
+                    out.write("</div>");
+                    out.write("</div>");
+                    out.write("</li>");
+                }
+            }
+        %>
+    </ul>
+</div>
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>

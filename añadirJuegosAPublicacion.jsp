@@ -1,9 +1,6 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
-
-
 
 <head>
     <meta charset="utf-8">
@@ -19,9 +16,17 @@
 <%@ page import="java.util.ArrayList" %>
 
 <body>
-<% ArrayList<JuegoVO> juegos = (ArrayList<JuegoVO>)request.getAttribute("juegos");
+<%  String emailLogin = null;
+    boolean leSigue = false;
+    String password = null;
+    String spoiler = (String)request.getAttribute("spoiler");
+    String texto = (String)request.getAttribute("texto");
+    String user = (String)request.getAttribute("user");
+
+    WebFacade fachada = new WebFacade();
+
+    ArrayList<JuegoVO> juegos = (ArrayList<JuegoVO>)request.getAttribute("juegos");
     if(juegos == null){
-        WebFacade fachada = new WebFacade();
         juegos = fachada.getJuegos();
     }
 %>
@@ -48,28 +53,22 @@
     </div>
 </nav>
 <div style="/*align-items:center;*/align-items:center;align-content:center;margin-top:1%;/*left:365px;*//*width:62px;*//*height:51px;*//*color:white;*//*position:absolute;*/text-align:center;/*background-color:black;*/">
-    <h1 style="/*align-self:center;*//*align-items:center;*//*align-content:center;*/margin:auto;line-height:51px;vertical-align:middle;">Lista de Juegos</h1>
+    <h1 style="/margin:auto;line-height:51px;vertical-align:middle;">Lista de Usuarios</h1>
 </div>
 <ul class="list-group" style="/*align-items:center;*//*align-items:center;*/align-content:center;/*margin-top:10%;*//*margin-left:1%;*//*width:62px;*//*height:51px;*//*color:white;*//*position:absolute;*//*text-align:center;*//*background-color:black;*/">
     <%  for(int i= 0; i < juegos.size(); i++) {
-        out.write("<li class=\"list-group-item\" id=\"colJuego\">\n"
-                + "        <div style=\"width:400px;/*position:absolute;*/float:left;\">\n"
-                + "            <h1>"+ juegos.get(i).getNombre() + "</h1>\n"
-                + "        </div>\n"
-                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
-                + "             <button name =\"lista\" class=\"btn btn-danger\" type=\"submit\" value=\"pendiente\" style=\"float:right;\">Añadir a pendiente</button>\n"
-                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
-                + "        </form>\n"
-                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
-                + "             <button name =\"lista\" class=\"btn btn-primary\" type=\"submit\" value=\"enCurso\" style=\"float:right;\">Añadir a en curso</button>\n"
-                + "             <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
-                + "        </form>\n"
-                + "        <form action=\"addJuegoServlet.do\" method=\"get\">\n"
-                + "            <button name =\"lista\" class=\"btn btn-success\" type=\"submit\" value=\"completado\" style=\"float:right;\">Añadir a completado</button>\n"
-                + "            <input name=\"id\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
-                + "        </form>\n"
-                + "    </li>");
-    }
+                out.write("<li class=\"list-group-item\" id=\"colJuego\">\n"
+                        + "        <div style=\"width:400px;/*position:absolute;*/float:left;\">\n"
+                        + "            <h1>" + juegos.get(i).getNombre() + "</h1>\n"
+                        + "        </div>\n"
+                        + "        <form action=\"anadirPublicacionServlet.do\" method=\"get\">\n"
+                        + "             <button name =\"seudonimo\" class=\"btn btn-primary\" type=\"submit\"  value=\"" + user + "\" style=\"float:right;\">Añadir a comentario</button>\n"
+                        + "              <input name=\"juego\" type=\"hidden\" value=\""+ juegos.get(i).getId() +"\">\n"
+                        + "              <input name=\"spoiler\" type=\"hidden\" value=\"" + spoiler + "\">\n"
+                        + "              <input name=\"texto\" type=\"hidden\" value=\""+ texto +"\">\n"
+                        + "        </form>\n"
+                        + "    </li>");
+        }
     %>
 </ul>
 <script src="assets/js/jquery.min.js"></script>

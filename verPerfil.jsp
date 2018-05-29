@@ -52,6 +52,9 @@
         <li class="nav-item" role="presentation"><a class="nav-link" href="ListaJuegosServlet.do">Juegos</a></li>
         <li class="nav-item" role="presentation"><a class="nav-link" href="#">Logros</a></li>
       </ul>
+      <ul class="nav navbar-nav">
+        <li class="nav-item" role="presentation"><a class="nav-link active" href="#">Lista de Usuarios</a></li>
+      </ul>
       <ul class="nav navbar-nav ml-auto">
         <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false" href="#">Ajustes</a>
           <div class="dropdown-menu dropdown-menu-right" role="menu"><a class="dropdown-item" role="presentation" href="#">&nbsp;Ver perfil</a><a class="dropdown-item" role="presentation" href="#">Cerrar sesión</a></div>
