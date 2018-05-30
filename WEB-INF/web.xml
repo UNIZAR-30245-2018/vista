@@ -6,7 +6,7 @@
 
 
     <welcome-file-list>
-        <welcome-file>Login.jsp</welcome-file>
+        <welcome-file>Login.html</welcome-file>
     </welcome-file-list>
 
     <servlet>
@@ -20,6 +20,21 @@
     </servlet>
 
     <servlet>
+        <servlet-name>verTodasPublicacionesServlet</servlet-name>
+        <servlet-class>control.verTodasPublicacionesServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>verPublicacionesDeUnUsuario</servlet-name>
+        <servlet-class>control.verPublicacionesDeUnUsuario</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>anadirPublicacionServlet</servlet-name>
+        <servlet-class>control.anadirPublicacionServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>control.RegisterServlet</servlet-class>
     </servlet>
@@ -30,18 +45,34 @@
     </servlet>
 
     <servlet>
+        <servlet-name>addJuegoServlet</servlet-name>
+        <servlet-class>control.addJuegoServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>verFeedServlet</servlet-name>
+        <servlet-class>control.verFeedServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>seguirUserServlet</servlet-name>
+        <servlet-class>control.seguirUserServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>verUsuariosServlet</servlet-name>
+        <servlet-class>control.verUsuariosServlet</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>CerrarSesionServlet</servlet-name>
         <servlet-class>control.CerrarSesionServlet</servlet-class>
     </servlet>
 
-    <servlet>
-        <servlet-name>anadirPublicacionServlet</servlet-name>
-        <servlet-class>control.anadirPublicacionServlet</servlet-class>
-    </servlet>
 
     <servlet>
-        <servlet-name>addJuegoServlet</servlet-name>
-        <servlet-class>control.addJuegoServlet</servlet-class>
+        <servlet-name>addJuegoAPub</servlet-name>
+        <servlet-class>control.addJuegoAPub</servlet-class>
     </servlet>
 
     <servlet-mapping>
@@ -60,13 +91,19 @@
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>ListaJuegosServlet</servlet-name>
-        <url-pattern>/ListaJuegosServlet.do</url-pattern>
+      <servlet-name>ListaJuegosServlet</servlet-name>
+      <url-pattern>/ListaJuegosServlet.do</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
-        <servlet-name>CerrarSesionServlet</servlet-name>
-        <url-pattern>/CerrarSesionServlet.do</url-pattern>
+        <servlet-name>verTodasPublicacionesServlet</servlet-name>
+        <url-pattern>/verTodasPublicacionesServlet.do</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>verPublicacionesDeUnUsuario</servlet-name>
+        <url-pattern>/verPublicacionesDeUnUsuario.do</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
@@ -79,5 +116,29 @@
         <url-pattern>/addJuegoServlet.do</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>verFeedServlet</servlet-name>
+        <url-pattern>/verFeedServlet.do</url-pattern>
+    </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>CerrarSesionServlet</servlet-name>
+        <url-pattern>/CerrarSesionServlet.do</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>seguirUserServlet</servlet-name>
+        <url-pattern>/seguirUserServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>verUsuariosServlet</servlet-name>
+        <url-pattern>/verUsuariosServlet.do</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>addJuegoAPub</servlet-name>
+        <url-pattern>/addJuegoAPub.do</url-pattern>
+    </servlet-mapping>
 </web-app>
